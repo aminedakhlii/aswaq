@@ -1,4 +1,9 @@
+import 'package:aswaq/addInvoice.dart';
 import 'package:aswaq/login.dart';
+import 'package:aswaq/register.dart';
+import 'package:aswaq/search.dart';
+import 'package:aswaq/searchForm.dart';
+import 'package:aswaq/users.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -33,9 +38,9 @@ class _MyHomePageState extends State<MyHomePage> {
     
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Center(child: Text(widget.title)),
       ),
-      body: Login()
+      body: Search()
     );
   }
 }
