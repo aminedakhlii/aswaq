@@ -1,8 +1,12 @@
+import 'package:aswaq/api/user.dart';
+import 'package:aswaq/models/user.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class Login extends StatelessWidget {
   bool _isChecked = false;
+  String? username,password; 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,12 +27,15 @@ class Login extends StatelessWidget {
                   height: 25,
                 ),
                 TextFormField(
-                  keyboardType: TextInputType.emailAddress,
+                  keyboardType: TextInputType.name,
                   decoration: InputDecoration(
                     labelText: 'Username',
                     border: OutlineInputBorder(),
                     prefixIcon: Icon(Icons.person)
                   ),
+                  onChanged: (tmp){
+                    username = tmp; 
+                  },
                 ),
                 SizedBox(
                   height: 20,
@@ -40,8 +47,10 @@ class Login extends StatelessWidget {
                     labelText: 'Password',
                     border: OutlineInputBorder(),
                     prefixIcon: Icon(Icons.lock),
-                    suffixIcon: Icon(Icons.remove_red_eye),
                   ),
+                  onChanged: (tmp){
+                    password = tmp; 
+                  },
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -71,7 +80,10 @@ class Login extends StatelessWidget {
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: MaterialButton(
-                    onPressed: () => print("Successul Login."),
+                    onPressed: () {
+                      UserApi usr = UserApi("",username,password) ; 
+                      usr.login();  
+                    },
                     color: Colors.blue,
                     child: Text(
                       'LOGIN',
