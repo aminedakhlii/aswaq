@@ -1,10 +1,19 @@
-import 'package:aswaq/invoice.dart';
+import 'package:aswaq/api/invoice.dart';
+import 'package:aswaq/models/invoice.dart';
 import 'package:flutter/material.dart';
 
+import 'models/item.dart';
+
 // ignore: must_be_immutable
-class NewInvoice extends StatelessWidget {
-  int? number; 
-  String desc = ""; 
+class NewItem extends StatelessWidget {
+
+  String? number,desc,code,name;
+  int? price, quantity;  
+
+  NewItem(number,desc){
+    this.number = number;
+    this.desc = desc; 
+  } 
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +25,7 @@ class NewInvoice extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  'Add Invoice',
+                  'Add Item',
                   style: TextStyle(
                       fontWeight: FontWeight.w900,
                       fontSize: 40.0,
@@ -26,32 +35,50 @@ class NewInvoice extends StatelessWidget {
                   height: 30,
                 ),
                 TextFormField(
-                  keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.name,
                   decoration: InputDecoration(
-                    labelText: 'Number',
+                    labelText: 'Code',
                     border: OutlineInputBorder(),
                     prefixIcon: Icon(Icons.code)
                   ),
-                  onChanged: (nbr) {
-                    this.number = int.tryParse(nbr); 
-                  },
                 ),
                 SizedBox(
                   height: 20,
                 ),
                 TextFormField(
-                  keyboardType: TextInputType.multiline,
+                  keyboardType: TextInputType.name,
                   decoration: InputDecoration(
-                    labelText: 'Description',
+                    labelText: 'Name',
                     border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.description)
+                    prefixIcon: Icon(Icons.code)
                   ),
-                  onChanged: (str) {
-                    this.desc = str; 
-                  },
                 ),
                 SizedBox(
                   height: 20,
+                ),
+                TextFormField(
+                  keyboardType: TextInputType.number,
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    labelText: 'Price',
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.money_rounded),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                TextFormField(
+                  keyboardType: TextInputType.number,
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    labelText: 'Quantity',
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.production_quantity_limits),
+                  ),
+                ),
+                SizedBox(
+                  height: 30,
                 ),
                 Container(
                   clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -61,15 +88,14 @@ class NewInvoice extends StatelessWidget {
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: MaterialButton(
-                    onPressed: () {
-                      if(number != null)
-                      Navigator.push(
-                      context, MaterialPageRoute(builder: (context) 
-                        => InvoiceView(number: number, description: desc,)));
-                        },
+                    onPressed: () async {
+                      InvoiceApi invoiceApi = InvoiceApi(number, desc);
+                      invoiceApi.items!.add(Item(code,name,price,quantity));
+                      //await invoiceApi.save(); 
+                    },
                     color: Colors.blue,
                     child: Text(
-                      'ADD INVOICE',
+                      'ADD ITEM',
                       style: TextStyle(
                         fontSize: 20,
                         color: Colors.white,

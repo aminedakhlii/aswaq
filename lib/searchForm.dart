@@ -1,3 +1,4 @@
+import 'package:aswaq/addInvoice.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -64,6 +65,28 @@ class SearchForm extends StatelessWidget {
                 ),
                 SizedBox(
                   height: 30,
+                ),
+                Container(
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  width: double.infinity,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  child: MaterialButton(
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => NewInvoice()),
+                    ),
+                    color: Colors.blue,
+                    child: Text(
+                      'ADD INVOICE',
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),

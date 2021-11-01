@@ -1,4 +1,5 @@
 import 'package:aswaq/addInvoice.dart';
+import 'package:aswaq/api/apiGlobal.dart';
 import 'package:aswaq/login.dart';
 import 'package:aswaq/register.dart';
 import 'package:aswaq/search.dart';
@@ -33,7 +34,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  bool checkLogged = true;
   int _selectedIndex = 0; 
 
   _onItemTapped(index){
@@ -49,28 +49,41 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Center(child: Text(widget.title)),
       ),
-      body: (checkLogged) ? screens[_selectedIndex] : Login(),
+      body: FutureBuilder(
+        future: validToken(),
+        builder: (context, snapshot) {
+          if(snapshot.data == true)
+            return screens[_selectedIndex]; 
+          return Login();
+        }
+      ),
 
-      bottomNavigationBar: (checkLogged) ? BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.inventory),
-            label: 'Invoices',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.people),
-            label: 'Users',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add),
-            label: 'Add User',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue[600],
-        onTap: _onItemTapped,
-      ) : null ,
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      bottomNavigationBar: FutureBuilder(
+        future: validToken(),
+        builder: (context, snapshot) {
+          if(snapshot.data == true)
+            return BottomNavigationBar(
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.inventory),
+                  label: 'Invoices',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.people),
+                  label: 'Users',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.add),
+                  label: 'Add User',
+                ),
+              ],
+              currentIndex: _selectedIndex,
+              selectedItemColor: Colors.blue[600],
+              onTap: _onItemTapped,
+            );
+          return SizedBox();   
+        }
+      ),
     );
   }
 }
@@ -78,6 +91,5 @@ class _MyHomePageState extends State<MyHomePage> {
 List screens = [
   Search(),
   UserList(),
-  NewInvoice(),
   Register(),
 ];

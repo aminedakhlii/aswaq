@@ -25,7 +25,6 @@ class UserApi extends User {
         String token = response["value"];
         String expiration = response["expirationTime"];
         storeToken(token, expiration); 
-        //DateTime exp = DateFormat("dd-MM-yyyy hh:ss").parse(response["expirationTime"]); 
       }  
       return res; 
     }

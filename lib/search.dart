@@ -33,13 +33,6 @@ class SearchState extends State<Search> {
               }
             ),
     );
-      /*shrinkWrap: true,
-      children: [
-        SearchForm(),
-        //ListView(children: invoiceItems())
-      ],
-    );*/
-  
   }
 
   List<InvoiceUIItem> invoiceItems() {
@@ -54,10 +47,10 @@ class SearchState extends State<Search> {
 
 fakeInvoices() {
   List invoices = []; 
-  invoices.add(Invoice("Invoice#x","Desc",4,23));
-  invoices.add(Invoice("Invoice#x","Desc",3,25));
-  invoices.add(Invoice("Invoice#x","Desc",2,200));
-  invoices.add(Invoice("Invoice#x","Desc",10,123));
+  invoices.add(Invoice(2,"Desc"));
+  invoices.add(Invoice(2,"Desc"));
+  invoices.add(Invoice(2,"Desc"));
+  invoices.add(Invoice(2,"Desc"));
   
   return invoices; 
 }

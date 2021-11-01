@@ -1,22 +1,18 @@
+import 'dart:convert';
+
+import 'package:aswaq/api/invoice.dart';
+import 'package:aswaq/invoice.dart';
 import 'package:flutter/material.dart';
 
 class Invoice {
-  String? code, description;
-  int? quantity, price;
-  Map<Item,int>? items;
+  int? number;
+  String? description;
+  List? items;
 
-  Invoice(code,description,quantity,price){
-    this.code = code;
+  Invoice(code,description){
+    this.number = code;
     this.description = description;
-    this.quantity = quantity;
-    this.price = price;
-    this.items = items;
   }
-}
-
-class Item {
-  String? code;
-  int? price;
 }
 
 // ignore: must_be_immutable
@@ -31,8 +27,12 @@ class InvoiceUIItem extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(10),
       child: GestureDetector(
-        onTap: (){
-          //Navigator.push(context, MaterialPageRoute(builder: (context) => IncoiceView()));
+        onTap: () async {
+          Widget pdf = await InvoiceApi(invoice!.number, invoice!.description).getPDF();
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => pdf),
+          );
         },
         child: Container(
           height: MediaQuery.of(context).size.height * 0.1,
@@ -61,7 +61,7 @@ class InvoiceUIItem extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(invoice?.code ?? "", style: TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.w800),),
+                    Text(invoice!.number.toString(), style: TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.w800),),
                     SizedBox(height: 8,),
                     Text(invoice?.description ?? "", style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w500)),
                   ],

@@ -1,4 +1,5 @@
 import 'package:aswaq/api/user.dart';
+import 'package:aswaq/main.dart';
 import 'package:aswaq/models/user.dart';
 import 'package:flutter/material.dart';
 
@@ -83,6 +84,10 @@ class Login extends StatelessWidget {
                     onPressed: () {
                       UserApi usr = UserApi("",username,password) ; 
                       usr.login();  
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => MyApp()),
+                      );
                     },
                     color: Colors.blue,
                     child: Text(
